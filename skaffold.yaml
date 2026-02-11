@@ -1,0 +1,58 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: bingeo-base-infra
+
+manifests:
+  rawYaml:
+    - ./k8s/base/*
+    - ./k8s/gateway/*
+
+deploy:
+  kubectl: {}
+
+---
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: bingeo-observability
+
+manifests:
+  rawYaml:
+    - ./observability/**/*
+
+deploy:
+  kubectl: {}
+
+---
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: bingeo-full
+
+requires:
+  - configs: ["bingeo-base-infra"]
+  - configs: ["bingeo-identity-cfg"]
+    path: ../services/bingeo-identity-service
+  - configs: ["bingeo-payment-cfg"]
+    path: ../services/bingeo-payment-service
+  - configs: ["bingeo-content-cfg"]
+    path: ../services/bingeo-content-service
+  - configs: ["bingeo-streaming-cfg"]
+    path: ../services/bingeo-streaming-service
+
+deploy:
+  kubectl: {}
+
+---
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: bingeo-full-obs
+
+requires:
+  - configs: ["bingeo-full"]
+  - configs: ["bingeo-observability"]
+
+deploy:
+  kubectl: {}
