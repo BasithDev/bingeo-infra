@@ -1,0 +1,10 @@
+# Dummy resource to keep bingeo-base-infra module alive in Skaffold.
+# Without at least one manifest, the module errors out.
+# Pattern: same as togather's K8s/keep-skaffold-alive.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bingeo-keep-alive
+  namespace: bingeo-app
+data:
+  purpose: "Keeps bingeo-base-infra Skaffold module alive"

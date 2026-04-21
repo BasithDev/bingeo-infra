@@ -1,0 +1,9 @@
+# Placeholder for future networking resources (CORS policies, rate-limiting, etc.)
+# This keeps the bingeo-infra-networking Skaffold module alive.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bingeo-networking-placeholder
+  namespace: bingeo-app
+data:
+  purpose: "Placeholder for bingeo-infra-networking module"
