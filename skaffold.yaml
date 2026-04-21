@@ -6,7 +6,19 @@ metadata:
 manifests:
   rawYaml:
     - ./k8s/base/*
-    - ./k8s/gateway/*
+
+deploy:
+  kubectl: {}
+
+---
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: bingeo-infra-networking
+
+manifests:
+  rawYaml:
+    - ./k8s/networking/*
 
 deploy:
   kubectl: {}
@@ -28,6 +40,19 @@ deploy:
 apiVersion: skaffold/v4beta13
 kind: Config
 metadata:
+  name: bingeo-doppler-secrets
+
+manifests:
+  rawYaml:
+    - ./k8s/doppler/templates/*
+
+deploy:
+  kubectl: {}
+
+---
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
   name: bingeo-full
 
 requires:
@@ -40,6 +65,7 @@ requires:
     path: ../services/bingeo-content-service
   - configs: ["bingeo-streaming-cfg"]
     path: ../services/bingeo-streaming-service
+  - configs: ["bingeo-infra-networking"]
 
 deploy:
   kubectl: {}

@@ -1,0 +1,30 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: bingeo-cors-policy
+  namespace: bingeo-envoy-gateway
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: bingeo-gateway
+  cors:
+    allowOrigins:
+      - "http://localhost:5173"
+      - "http://localhost:3000"
+    allowMethods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+      - OPTIONS
+    allowHeaders:
+      - Content-Type
+      - Authorization
+      - Cookie
+      - X-Requested-With
+    exposeHeaders:
+      - Set-Cookie
+    allowCredentials: true
+    maxAge: 24h
